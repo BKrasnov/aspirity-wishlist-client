@@ -1,6 +1,7 @@
 import { Immerable, OmitImmerable } from './immerable';
 
 type Priority = 'high' | 'medium' | 'low';
+
 /** A comment. */
 interface Comment {
   /** Id comment. */
@@ -17,7 +18,7 @@ interface Comment {
 }
 
 /** Wish item. */
-export class WishItem extends Immerable {
+export class Item extends Immerable {
   /** Wish item id. */
   public readonly id: number;
 
@@ -59,4 +60,4 @@ export class WishItem extends Immerable {
   }
 }
 
-type InitArgsWishItem = OmitImmerable<WishItem>;
+type InitArgsWishItem = OmitImmerable<Item>;
