@@ -15,11 +15,11 @@ const WishListComponent: FC = () => {
   }, []);
 
   return (
-    <>
+    <ul>
       {wishList.map(wishItem => (
-        <WishItem wishItem={wishItem} />
+        <WishItem key={wishItem.id} wishItem={wishItem} />
       ))}
-    </>
+    </ul>
   );
 };
 

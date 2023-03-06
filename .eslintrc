@@ -38,6 +38,7 @@
     "import/no-unresolved": 0,
     "import/extensions": 0,
     "no-undef": 0,
+    "react/no-unknown-property": ["error", { "ignore": ["css"] }],
     "react/jsx-filename-extension": [
       2,
       { "extensions": [".js", ".jsx", ".ts", ".tsx"] }

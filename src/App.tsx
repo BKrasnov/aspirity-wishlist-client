@@ -4,10 +4,10 @@ import { Provider } from 'react-redux';
 import { WishListPage } from './features/wishlist';
 import { store } from './store';
 
+import './theme/base.css';
+
 export const App: FC = () => (
   <Provider store={store}>
-    <div>
-      <WishListPage />
-    </div>
+    <WishListPage />
   </Provider>
 );
