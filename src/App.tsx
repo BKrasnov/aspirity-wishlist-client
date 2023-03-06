@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { FC } from 'react';
+import { Provider } from 'react-redux';
 
-function App() {
-  return <div className="App">Hello world</div>;
-}
+import { WishListPage } from './features/wishlist';
+import { store } from './store';
 
-export default App;
+export const App: FC = () => (
+  <Provider store={store}>
+    <div>
+      <WishListPage />
+    </div>
+  </Provider>
+);
