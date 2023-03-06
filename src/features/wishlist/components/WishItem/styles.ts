@@ -42,7 +42,7 @@ export const wishItemStyle = {
     gap: '15px',
   }),
 
-  buttonChange: css([
+  buttonUpdate: css([
     button,
     {
       backgroundColor: colors.secondary,

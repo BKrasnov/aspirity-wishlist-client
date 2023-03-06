@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import React, { FC, memo } from 'react';
+import React, { FC, memo, useCallback } from 'react';
 
 import { Item } from '../../../../core/models';
 
@@ -13,6 +13,10 @@ interface IProps {
 
 const WishItemComponent: FC<IProps> = ({ wishItem }) => {
   const wishItemDate = wishItem.date.toLocaleString().substring(0, 17);
+
+  const handleUpdateWishItem = useCallback(() => {}, []);
+
+  const handleDeleteWishItem = useCallback(async () => {}, []);
 
   return (
     <li css={wishItemStyle.container}>
@@ -33,10 +37,18 @@ const WishItemComponent: FC<IProps> = ({ wishItem }) => {
           <span>Добавлен: {wishItemDate}</span>
         </div>
         <div css={wishItemStyle.buttons}>
-          <button css={wishItemStyle.buttonChange} type="button">
+          <button
+            onClick={handleUpdateWishItem}
+            css={wishItemStyle.buttonUpdate}
+            type="button"
+          >
             Изменить
           </button>
-          <button css={wishItemStyle.buttonDelete} type="button">
+          <button
+            onClick={handleDeleteWishItem}
+            css={wishItemStyle.buttonDelete}
+            type="button"
+          >
             Удалить
           </button>
         </div>
