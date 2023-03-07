@@ -4,6 +4,7 @@ import { generalColors } from '../../../../theme/variable';
 const radius = '15px';
 
 const button = css({
+  marginTop: '20px',
   padding: '8px',
   borderRadius: '5px',
   cursor: 'pointer',
@@ -31,7 +32,7 @@ export const wishItemStyle = {
 
   header: css({
     marginBottom: '10px',
-    lineHeight: '110%',
+    lineHeight: '120%',
   }),
 
   price: css({
