@@ -1,8 +1,12 @@
 /** @jsxImportSource @emotion/react */
 
-import React, { FC, memo, useCallback } from 'react';
+import React, { FC, memo, useCallback, useEffect, useState } from 'react';
 
 import { Item } from '../../../../core/models';
+
+import { useAppDispatch } from '../../../../store';
+import { deleteWishItem } from '../../../../store/wish/dispatchers';
+import { priorityColors } from '../../../../theme/variable';
 
 import { wishItemStyle } from './styles';
 
@@ -12,11 +16,27 @@ interface IProps {
 }
 
 const WishItemComponent: FC<IProps> = ({ wishItem }) => {
+  const [colorPriority, setColorPriority] = useState(priorityColors.medium);
+
+  const dispatch = useAppDispatch();
+
   const wishItemDate = wishItem.date.toLocaleString().substring(0, 17);
 
   const handleUpdateWishItem = useCallback(() => {}, []);
 
-  const handleDeleteWishItem = useCallback(async () => {}, []);
+  const handleDeleteWishItem = useCallback(async () => {
+    dispatch(deleteWishItem(wishItem.id));
+  }, [dispatch]);
+
+  useEffect(() => {
+    console.log('Priority render');
+    if (wishItem.priority === 'high') {
+      setColorPriority(priorityColors.high);
+    }
+    if (wishItem.priority === 'low') {
+      setColorPriority(priorityColors.low);
+    }
+  }, [wishItem.priority]);
 
   return (
     <li css={wishItemStyle.container}>
@@ -29,11 +49,13 @@ const WishItemComponent: FC<IProps> = ({ wishItem }) => {
         <div>
           <div css={wishItemStyle.header}>
             <h2>{wishItem.name}</h2>
-            <span>
+            <h3 css={wishItemStyle.price}>
               {wishItem.price?.toLocaleString('ru') ?? 'Стоимость не указана'}
-            </span>
+            </h3>
           </div>
-          {wishItem.description ? <p>{wishItem.description}</p> : null}
+          {wishItem.description ? (
+            <p css={wishItemStyle.description}>{wishItem.description}</p>
+          ) : null}
           <span>Добавлен: {wishItemDate}</span>
         </div>
         <div css={wishItemStyle.buttons}>
@@ -52,6 +74,9 @@ const WishItemComponent: FC<IProps> = ({ wishItem }) => {
             Удалить
           </button>
         </div>
+      </div>
+      <div css={[wishItemStyle.priority, { backgroundColor: colorPriority }]}>
+        {' '}
       </div>
     </li>
   );

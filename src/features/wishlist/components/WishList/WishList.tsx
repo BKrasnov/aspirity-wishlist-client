@@ -11,8 +11,10 @@ const WishListComponent: FC = () => {
   const wishList = useAppSelector(selectWishList);
 
   useEffect(() => {
-    dispatch(fetchWishList());
-  }, []);
+    if (wishList.length === 0) {
+      dispatch(fetchWishList());
+    }
+  }, [dispatch, wishList.length]);
 
   return (
     <ul>
