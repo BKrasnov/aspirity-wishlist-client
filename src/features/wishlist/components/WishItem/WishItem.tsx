@@ -6,6 +6,7 @@ import { Item } from '../../../../core/models';
 
 import { useAppDispatch } from '../../../../store';
 import { deleteWishItem } from '../../../../store/wish/dispatchers';
+import { wishActions } from '../../../../store/wish/slice';
 import { priorityColors } from '../../../../theme/variable';
 
 import { wishItemStyle } from './styles';
@@ -22,14 +23,15 @@ const WishItemComponent: FC<IProps> = ({ wishItem }) => {
 
   const wishItemDate = wishItem.date.toLocaleString().substring(0, 17);
 
-  const handleUpdateWishItem = useCallback(() => {}, []);
+  const handleSelectElement = useCallback(() => {
+    dispatch(wishActions.setWishItem(wishItem));
+  }, [dispatch]);
 
   const handleDeleteWishItem = useCallback(async () => {
     dispatch(deleteWishItem(wishItem.id));
   }, [dispatch]);
 
   useEffect(() => {
-    console.log('Priority render');
     if (wishItem.priority === 'high') {
       setColorPriority(priorityColors.high);
     }
@@ -60,7 +62,7 @@ const WishItemComponent: FC<IProps> = ({ wishItem }) => {
         </div>
         <div css={wishItemStyle.buttons}>
           <button
-            onClick={handleUpdateWishItem}
+            onClick={handleSelectElement}
             css={wishItemStyle.buttonUpdate}
             type="button"
           >

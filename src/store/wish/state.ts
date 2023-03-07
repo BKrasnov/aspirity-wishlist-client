@@ -5,14 +5,18 @@ export interface WishState {
   /** Wish list. */
   readonly items: Item[];
 
-  /** @todo */
+  /** Error loading wishlist. */
   readonly error?: string;
 
-  /** @todo */
+  /** Wish list is loading. */
   readonly isLoading: boolean;
+
+  /** Current selected wish item. */
+  readonly currentWishItem: Item | null;
 }
 
 export const initialState: WishState = {
   isLoading: false,
   items: [],
+  currentWishItem: null,
 };
