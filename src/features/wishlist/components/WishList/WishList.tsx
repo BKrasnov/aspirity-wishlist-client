@@ -2,6 +2,7 @@
 import React, { FC, memo, useEffect } from 'react';
 
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
+import { StorageService } from '../../../../api/service/storageService';
 
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { fetchWishList } from '../../../../store/wish/dispatchers';
@@ -28,6 +29,8 @@ const WishListComponent: FC = () => {
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
 
+    const itemsKeys = items.map(item => item.id);
+    StorageService.save('positions', itemsKeys);
     dispatch(wishActions.changePositions(items));
   };
 
