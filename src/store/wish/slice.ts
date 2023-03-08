@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { deleteWishItem, fetchWishList } from './dispatchers';
+import { fetchWishList } from './dispatchers';
 
 import { Item } from '../../core/models';
 
@@ -27,11 +27,6 @@ export const wishSlice = createSlice({
         if (action.error.message) {
           state.error = action.error.message;
         }
-        state.isLoading = false;
-      })
-
-      .addCase(deleteWishItem.fulfilled, (state, action) => {
-        state.items = action.payload;
         state.isLoading = false;
       }),
 });

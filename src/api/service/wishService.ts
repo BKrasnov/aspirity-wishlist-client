@@ -19,36 +19,28 @@ export namespace WishService {
   }
 
   /**
-   * Update item.
+   * Add item.
    * @param item Item.
    */
-  export async function addWishItem(item: Item): Promise<Item[]> {
-    await http.post(wishUrl.toString(), {
-      data: item,
-    });
-    const wishListItem = fetchWishList();
-    return wishListItem;
+  export async function addWishItem(item: Item): Promise<void> {
+    const itemDto = ItemMapper.toDto(item);
+    await http.post<ItemDto>(wishUrl.toString(), itemDto);
   }
 
   /**
    * Update item.
    * @param item Item.
    */
-  export async function updateWishItem(item: Item): Promise<Item[]> {
-    await http.put(`${wishUrl.toString()}/${item.id}`, {
-      data: item,
-    });
-    const wishListItem = fetchWishList();
-    return wishListItem;
+  export async function updateWishItem(item: Item): Promise<void> {
+    const itemDto = ItemMapper.toDto(item);
+    await http.put<ItemDto>(`${wishUrl.toString()}/${itemDto.id}`, itemDto);
   }
 
   /**
    * Delete item.
    * @param id Item id.
    */
-  export async function deleteWishItem(id: number): Promise<Item[]> {
+  export async function deleteWishItem(id: number): Promise<void> {
     await http.delete<ItemDto[]>(`${wishUrl.toString()}/${id}`);
-    const wishListItem = fetchWishList();
-    return wishListItem;
   }
 }
