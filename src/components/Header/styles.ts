@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { colors } from '../../theme/variable';
+import { generalColors } from '../../theme/variable';
 
 export const headerStyle = {
   header: css({
@@ -7,7 +7,6 @@ export const headerStyle = {
     height: '80px',
     marginBottom: '30px',
     padding: '0 20px',
-    color: colors.secondary,
-    backgroundColor: colors.primary,
+    backgroundColor: generalColors.primary,
   }),
 };
