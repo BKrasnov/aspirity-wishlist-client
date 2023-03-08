@@ -36,7 +36,7 @@ export namespace WishService {
    */
   export async function updateWishItem(item: Item): Promise<void> {
     const itemDto = ItemMapper.toDto(item);
-    await http.put<ItemDto>(wishUrl, itemDto);
+    await http.put<ItemDto>(`${wishUrl}/${item.id}`, itemDto);
   }
 
   /**
