@@ -22,9 +22,6 @@ export class Item extends Immerable {
   /** The price of the wish item. */
   public readonly price?: number;
 
-  /** Link to wish item. */
-  public readonly link?: string;
-
   /** Reference to the picture of the wish item. */
   public readonly imageRef?: string;
 
@@ -36,7 +33,6 @@ export class Item extends Immerable {
     this.date = data.date;
     this.description = data.description;
     this.price = data.price;
-    this.link = data.link;
     this.imageRef = data.imageRef;
     this.priority = data.priority;
   }
