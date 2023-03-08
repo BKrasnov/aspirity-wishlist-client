@@ -3,13 +3,6 @@ import { generalColors } from '../../../../theme/variable';
 
 const radius = '15px';
 
-const button = css({
-  marginTop: '20px',
-  padding: '8px',
-  borderRadius: '5px',
-  cursor: 'pointer',
-});
-
 export const wishItemStyle = {
   container: css({
     maxWidth: '500px',
@@ -61,21 +54,15 @@ export const wishItemStyle = {
     gap: '15px',
   }),
 
-  buttonUpdate: css([
-    button,
-    {
-      backgroundColor: generalColors.secondary,
-      color: generalColors.primary,
-      border: 'none',
-    },
-  ]),
+  buttonUpdate: css({
+    backgroundColor: generalColors.secondary,
+    color: generalColors.primary,
+    border: 'none',
+  }),
 
-  buttonDelete: css([
-    button,
-    {
-      backgroundColor: generalColors.primary,
-      color: generalColors.secondary,
-      border: `1px solid ${generalColors.secondary}`,
-    },
-  ]),
+  buttonDelete: css({
+    backgroundColor: generalColors.primary,
+    color: generalColors.secondary,
+    border: `1px solid ${generalColors.secondary}`,
+  }),
 };

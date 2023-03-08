@@ -1,11 +1,15 @@
 /** @jsxImportSource @emotion/react */
 
 import React, { FC, memo, useCallback, useEffect, useState } from 'react';
+import { Button } from '../../../../components/Button';
 
 import { Item } from '../../../../core/models';
 
 import { useAppDispatch } from '../../../../store';
-import { deleteWishItem } from '../../../../store/wish/dispatchers';
+import {
+  deleteWishItem,
+  fetchWishList,
+} from '../../../../store/wish/dispatchers';
 import { wishActions } from '../../../../store/wish/slice';
 import { priorityColors } from '../../../../theme/variable';
 
@@ -28,7 +32,8 @@ const WishItemComponent: FC<IProps> = ({ wishItem }) => {
   }, [dispatch]);
 
   const handleDeleteWishItem = useCallback(async () => {
-    dispatch(deleteWishItem(wishItem.id));
+    await dispatch(deleteWishItem(wishItem.id));
+    await dispatch(fetchWishList());
   }, [dispatch]);
 
   useEffect(() => {
@@ -61,20 +66,20 @@ const WishItemComponent: FC<IProps> = ({ wishItem }) => {
           <span>Добавлен: {wishItemDate}</span>
         </div>
         <div css={wishItemStyle.buttons}>
-          <button
-            onClick={handleSelectElement}
-            css={wishItemStyle.buttonUpdate}
+          <Button
+            handleClick={handleSelectElement}
+            style={wishItemStyle.buttonUpdate}
             type="button"
           >
             Изменить
-          </button>
-          <button
-            onClick={handleDeleteWishItem}
-            css={wishItemStyle.buttonDelete}
+          </Button>
+          <Button
+            handleClick={handleDeleteWishItem}
+            style={wishItemStyle.buttonDelete}
             type="button"
           >
             Удалить
-          </button>
+          </Button>
         </div>
       </div>
       <div css={[wishItemStyle.priority, { backgroundColor: colorPriority }]}>
