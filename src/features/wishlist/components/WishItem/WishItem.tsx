@@ -1,6 +1,8 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /** @jsxImportSource @emotion/react */
 
 import React, { FC, memo, useCallback, useEffect, useState } from 'react';
+import { Draggable } from 'react-beautiful-dnd';
 import { Button } from '../../../../components/Button';
 
 import { Item } from '../../../../core/models';
@@ -16,11 +18,14 @@ import { priorityColors } from '../../../../theme/variable';
 import { wishItemStyle } from './styles';
 
 interface IProps {
+  /** List index. */
+  readonly index: number;
+
   /** Wish item. */
   readonly wishItem: Item;
 }
 
-const WishItemComponent: FC<IProps> = ({ wishItem }) => {
+const WishItemComponent: FC<IProps> = ({ wishItem, index }) => {
   const [colorPriority, setColorPriority] = useState(priorityColors.medium);
 
   const dispatch = useAppDispatch();
@@ -46,46 +51,63 @@ const WishItemComponent: FC<IProps> = ({ wishItem }) => {
   }, [wishItem.priority]);
 
   return (
-    <li css={wishItemStyle.container}>
-      {wishItem.imageRef ? (
-        <div>
-          <img src={wishItem.imageRef} css={wishItemStyle.image} alt="" />
+    <Draggable
+      index={index}
+      key={wishItem.id}
+      draggableId={String(wishItem.id)}
+    >
+      {provided => (
+        <div
+          ref={provided.innerRef}
+          {...provided.dragHandleProps}
+          {...provided.draggableProps}
+        >
+          <li css={wishItemStyle.container}>
+            {wishItem.imageRef ? (
+              <div>
+                <img src={wishItem.imageRef} css={wishItemStyle.image} alt="" />
+              </div>
+            ) : null}
+            <div css={wishItemStyle.wrapper}>
+              <div>
+                <div css={wishItemStyle.header}>
+                  <h2>{wishItem.name}</h2>
+                  <h3 css={wishItemStyle.price}>
+                    {wishItem.price?.toLocaleString('ru') ??
+                      'Стоимость не указана'}
+                  </h3>
+                </div>
+                {wishItem.description ? (
+                  <p css={wishItemStyle.description}>{wishItem.description}</p>
+                ) : null}
+                <span>Добавлен: {wishItemDate}</span>
+              </div>
+              <div css={wishItemStyle.buttons}>
+                <Button
+                  handleClick={handleSelectElement}
+                  style={wishItemStyle.buttonUpdate}
+                  type="button"
+                >
+                  Изменить
+                </Button>
+                <Button
+                  handleClick={handleDeleteWishItem}
+                  style={wishItemStyle.buttonDelete}
+                  type="button"
+                >
+                  Удалить
+                </Button>
+              </div>
+            </div>
+            <div
+              css={[wishItemStyle.priority, { backgroundColor: colorPriority }]}
+            >
+              {' '}
+            </div>
+          </li>
         </div>
-      ) : null}
-      <div css={wishItemStyle.wrapper}>
-        <div>
-          <div css={wishItemStyle.header}>
-            <h2>{wishItem.name}</h2>
-            <h3 css={wishItemStyle.price}>
-              {wishItem.price?.toLocaleString('ru') ?? 'Стоимость не указана'}
-            </h3>
-          </div>
-          {wishItem.description ? (
-            <p css={wishItemStyle.description}>{wishItem.description}</p>
-          ) : null}
-          <span>Добавлен: {wishItemDate}</span>
-        </div>
-        <div css={wishItemStyle.buttons}>
-          <Button
-            handleClick={handleSelectElement}
-            style={wishItemStyle.buttonUpdate}
-            type="button"
-          >
-            Изменить
-          </Button>
-          <Button
-            handleClick={handleDeleteWishItem}
-            style={wishItemStyle.buttonDelete}
-            type="button"
-          >
-            Удалить
-          </Button>
-        </div>
-      </div>
-      <div css={[wishItemStyle.priority, { backgroundColor: colorPriority }]}>
-        {' '}
-      </div>
-    </li>
+      )}
+    </Draggable>
   );
 };
 

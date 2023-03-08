@@ -12,6 +12,9 @@ export const wishSlice = createSlice({
     setWishItem: (state, action: PayloadAction<Item | null>) => {
       state.currentWishItem = action.payload;
     },
+    changePositions: (state, action: PayloadAction<Item[]>) => {
+      state.items = action.payload;
+    },
   },
   extraReducers: builder =>
     builder

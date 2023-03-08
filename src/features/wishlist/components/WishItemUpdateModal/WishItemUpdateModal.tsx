@@ -12,6 +12,7 @@ import { selectCurrentWishItem } from '../../../../store/wish/selectors';
 import { wishActions } from '../../../../store/wish/slice';
 
 import { WishItemForm } from '../WishItemForm';
+
 import { ItemFormValue } from '../WishItemForm/formSettings';
 import { Item } from '../../../../core/models';
 

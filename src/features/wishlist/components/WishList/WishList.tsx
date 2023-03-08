@@ -1,8 +1,14 @@
+/* eslint-disable no-shadow */
 import React, { FC, memo, useEffect } from 'react';
+
+import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
+import { StorageService } from '../../../../api/service/storageService';
 
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { fetchWishList } from '../../../../store/wish/dispatchers';
 import { selectWishList } from '../../../../store/wish/selectors';
+import { wishActions } from '../../../../store/wish/slice';
+
 import { WishItem } from '../WishItem';
 
 const WishListComponent: FC = () => {
@@ -16,12 +22,32 @@ const WishListComponent: FC = () => {
     }
   }, [dispatch, wishList.length]);
 
+  const handleOnDragEnd = (result: DropResult) => {
+    if (!result.destination) return;
+
+    const items = Array.from(wishList);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+
+    const itemsKeys = items.map(item => item.id);
+    StorageService.save('positions', itemsKeys);
+    dispatch(wishActions.changePositions(items));
+  };
+
   return (
-    <ul>
-      {wishList.map(wishItem => (
-        <WishItem key={wishItem.id} wishItem={wishItem} />
-      ))}
-    </ul>
+    <DragDropContext onDragEnd={handleOnDragEnd}>
+      <Droppable droppableId="WishItemId">
+        {provided => (
+          // eslint-disable-next-line react/jsx-props-no-spreading
+          <ul ref={provided.innerRef} {...provided.droppableProps}>
+            {wishList.map((wishItem, index) => (
+              <WishItem index={index} key={wishItem.id} wishItem={wishItem} />
+            ))}
+            {provided.placeholder}
+          </ul>
+        )}
+      </Droppable>
+    </DragDropContext>
   );
 };
 

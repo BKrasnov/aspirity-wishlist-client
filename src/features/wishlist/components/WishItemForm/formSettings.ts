@@ -1,4 +1,5 @@
 import * as yup from 'yup';
+
 import { Item } from '../../../../core/models';
 
 const MIN_PRICE = 0;
@@ -6,6 +7,7 @@ const MAX_PRICE = 10_000_000;
 
 const MAX_LENGTH_NAME = 20;
 const MAX_LENGTH_DESCRIPTION = 50;
+
 /** Item form value. */
 export type ItemFormValue = Omit<Item, 'id'>;
 

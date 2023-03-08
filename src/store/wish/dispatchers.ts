@@ -48,3 +48,14 @@ export const updateWishItem = createAsyncThunk(
     }
   }
 );
+
+export const addFakeWishItems = createAsyncThunk(
+  'wish/addFakeItems',
+  async (_, thunkApi) => {
+    try {
+      return await WishService.addFakeWishItems();
+    } catch (error: unknown) {
+      return thunkApi.rejectWithValue(error);
+    }
+  }
+);

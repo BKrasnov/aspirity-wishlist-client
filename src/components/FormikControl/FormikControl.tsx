@@ -15,8 +15,8 @@ export interface OptionsSelect {
 }
 
 interface FieldSettings {
-  control: string;
-  options?: OptionsSelect[];
+  readonly control: string;
+  readonly options?: OptionsSelect[];
 }
 
 /**
