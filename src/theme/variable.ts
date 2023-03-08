@@ -15,9 +15,12 @@ export const generalColors = {
 
 /** Colors for prioritization. */
 export const priorityColors = {
+  /** Yellow. */
   low: '#f5e000',
 
+  /** Orange. */
   medium: '#f9731d',
 
+  /** Red. */
   high: '#ec1623',
 };

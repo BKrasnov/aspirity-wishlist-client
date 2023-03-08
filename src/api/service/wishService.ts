@@ -9,13 +9,13 @@ import { CONFIG } from '../config';
 
 export namespace WishService {
   const fileName = 'item';
-  const wishUrl = new URL(fileName, CONFIG.apiUrl);
+  const wishUrl = new URL(fileName, CONFIG.apiUrl).toString();
 
   /**
    * Request to the mock-server to get wishItems.
    */
   export async function fetchWishList(): Promise<Item[]> {
-    const { data } = await http.get<ItemDto[]>(wishUrl.toString());
+    const { data } = await http.get<ItemDto[]>(wishUrl);
     const wishListItem = data.map(wishItem => ItemMapper.fromDto(wishItem));
     const sortWishListItem = await sortWishList(wishListItem);
     return sortWishListItem;
@@ -27,7 +27,7 @@ export namespace WishService {
    */
   export async function addWishItem(item: Item): Promise<void> {
     const itemDto = ItemMapper.toDto(item);
-    await http.post<ItemDto>(wishUrl.toString(), itemDto);
+    await http.post<ItemDto>(wishUrl, itemDto);
   }
 
   /**
@@ -36,7 +36,7 @@ export namespace WishService {
    */
   export async function updateWishItem(item: Item): Promise<void> {
     const itemDto = ItemMapper.toDto(item);
-    await http.put<ItemDto>(`${wishUrl.toString()}/${itemDto.id}`, itemDto);
+    await http.put<ItemDto>(wishUrl, itemDto);
   }
 
   /**
@@ -44,13 +44,13 @@ export namespace WishService {
    * @param id Item id.
    */
   export async function deleteWishItem(id: number): Promise<void> {
-    await http.delete<ItemDto[]>(`${wishUrl.toString()}/${id}`);
+    await http.delete<ItemDto[]>(`${wishUrl}/${id}`);
   }
 
   /**
-   * Add wish item from server.
+   * Add fake wish item from server.
    */
   export async function addFakeWishItems(): Promise<void> {
-    await http.post<ItemDto[]>(`${wishUrl.toString()}/add-items`);
+    await http.post<ItemDto[]>(`${wishUrl}/add-items`);
   }
 }

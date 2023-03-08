@@ -55,12 +55,14 @@ export const wishItemStyle = {
   }),
 
   buttonUpdate: css({
+    marginTop: '20px',
     backgroundColor: generalColors.secondary,
     color: generalColors.primary,
     border: 'none',
   }),
 
   buttonDelete: css({
+    marginTop: '20px',
     backgroundColor: generalColors.primary,
     color: generalColors.secondary,
     border: `1px solid ${generalColors.secondary}`,

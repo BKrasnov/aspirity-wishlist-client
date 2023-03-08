@@ -3,7 +3,7 @@
 import React, { FC, useCallback } from 'react';
 
 import { useAppDispatch } from '../../store';
-import { addFakeWishItems } from '../../store/wish/dispatchers';
+import { addFakeWishItems, fetchWishList } from '../../store/wish/dispatchers';
 
 import { Button } from '../Button';
 
@@ -14,6 +14,7 @@ export const Header: FC = () => {
 
   const handleClick = useCallback(() => {
     dispatch(addFakeWishItems());
+    dispatch(fetchWishList());
   }, [dispatch]);
 
   return (
