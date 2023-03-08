@@ -6,7 +6,7 @@ import { http } from '..';
 import { CONFIG } from '../config';
 
 export namespace WishService {
-  const fileName = 'wish-item.json';
+  const fileName = 'item';
   const wishUrl = new URL(fileName, CONFIG.apiUrl);
 
   /**
@@ -14,8 +14,33 @@ export namespace WishService {
    */
   export async function fetchWishList(): Promise<Item[]> {
     const { data } = await http.get<ItemDto[]>(wishUrl.toString());
-
     const wishListItem = data.map(wishItem => ItemMapper.fromDto(wishItem));
     return wishListItem;
+  }
+
+  /**
+   * Add item.
+   * @param item Item.
+   */
+  export async function addWishItem(item: Item): Promise<void> {
+    const itemDto = ItemMapper.toDto(item);
+    await http.post<ItemDto>(wishUrl.toString(), itemDto);
+  }
+
+  /**
+   * Update item.
+   * @param item Item.
+   */
+  export async function updateWishItem(item: Item): Promise<void> {
+    const itemDto = ItemMapper.toDto(item);
+    await http.put<ItemDto>(`${wishUrl.toString()}/${itemDto.id}`, itemDto);
+  }
+
+  /**
+   * Delete item.
+   * @param id Item id.
+   */
+  export async function deleteWishItem(id: number): Promise<void> {
+    await http.delete<ItemDto[]>(`${wishUrl.toString()}/${id}`);
   }
 }

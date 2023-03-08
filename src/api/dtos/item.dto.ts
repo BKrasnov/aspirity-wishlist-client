@@ -15,14 +15,11 @@ export interface ItemDto {
   readonly priority: PriorityDto;
 
   /** Description of the wish item. */
-  readonly description?: string;
+  readonly description: string | null;
 
   /** The price of the wish item. */
-  readonly price?: number;
-
-  /** Link to wish item. */
-  readonly link?: string;
+  readonly price: number | null;
 
   /** Reference to the picture of the wish item. */
-  readonly image_ref?: string;
+  readonly image_ref: string | null;
 }

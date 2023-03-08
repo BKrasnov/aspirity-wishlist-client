@@ -1,13 +1,23 @@
-export const colors = {
-  /** Purplish blue. */
-  primary: '#5046af',
+/** General colors. */
+export const generalColors = {
+  /** White. */
+  primary: '#FFFFFF',
 
-  /** Pink. */
-  secondary: '#fffdd0',
+  /** Navy blue. */
+  secondary: '#3563E9',
 
   /** Grey. */
-  tertiary: '#BDB75A',
+  tertiary: '#485260',
 
   /** Dark red. */
   danger: '#9b211b',
+};
+
+/** Colors for prioritization. */
+export const priorityColors = {
+  low: '#f5e000',
+
+  medium: '#f9731d',
+
+  high: '#ec1623',
 };

@@ -1,8 +1,17 @@
 /** @jsxImportSource @emotion/react */
 
-import React, { FC, memo } from 'react';
+import React, { FC, memo, useCallback, useEffect, useState } from 'react';
+import { Button } from '../../../../components/Button';
 
 import { Item } from '../../../../core/models';
+
+import { useAppDispatch } from '../../../../store';
+import {
+  deleteWishItem,
+  fetchWishList,
+} from '../../../../store/wish/dispatchers';
+import { wishActions } from '../../../../store/wish/slice';
+import { priorityColors } from '../../../../theme/variable';
 
 import { wishItemStyle } from './styles';
 
@@ -12,7 +21,29 @@ interface IProps {
 }
 
 const WishItemComponent: FC<IProps> = ({ wishItem }) => {
+  const [colorPriority, setColorPriority] = useState(priorityColors.medium);
+
+  const dispatch = useAppDispatch();
+
   const wishItemDate = wishItem.date.toLocaleString().substring(0, 17);
+
+  const handleSelectElement = useCallback(() => {
+    dispatch(wishActions.setWishItem(wishItem));
+  }, [dispatch]);
+
+  const handleDeleteWishItem = useCallback(async () => {
+    await dispatch(deleteWishItem(wishItem.id));
+    await dispatch(fetchWishList());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (wishItem.priority === 'high') {
+      setColorPriority(priorityColors.high);
+    }
+    if (wishItem.priority === 'low') {
+      setColorPriority(priorityColors.low);
+    }
+  }, [wishItem.priority]);
 
   return (
     <li css={wishItemStyle.container}>
@@ -25,21 +56,34 @@ const WishItemComponent: FC<IProps> = ({ wishItem }) => {
         <div>
           <div css={wishItemStyle.header}>
             <h2>{wishItem.name}</h2>
-            <span>
+            <h3 css={wishItemStyle.price}>
               {wishItem.price?.toLocaleString('ru') ?? 'Стоимость не указана'}
-            </span>
+            </h3>
           </div>
-          {wishItem.description ? <p>{wishItem.description}</p> : null}
+          {wishItem.description ? (
+            <p css={wishItemStyle.description}>{wishItem.description}</p>
+          ) : null}
           <span>Добавлен: {wishItemDate}</span>
         </div>
         <div css={wishItemStyle.buttons}>
-          <button css={wishItemStyle.buttonChange} type="button">
+          <Button
+            handleClick={handleSelectElement}
+            style={wishItemStyle.buttonUpdate}
+            type="button"
+          >
             Изменить
-          </button>
-          <button css={wishItemStyle.buttonDelete} type="button">
+          </Button>
+          <Button
+            handleClick={handleDeleteWishItem}
+            style={wishItemStyle.buttonDelete}
+            type="button"
+          >
             Удалить
-          </button>
+          </Button>
         </div>
+      </div>
+      <div css={[wishItemStyle.priority, { backgroundColor: colorPriority }]}>
+        {' '}
       </div>
     </li>
   );

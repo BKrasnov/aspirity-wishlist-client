@@ -1,12 +1,18 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { fetchWishList } from './dispatchers';
+
+import { Item } from '../../core/models';
 
 import { initialState } from './state';
 
 export const wishSlice = createSlice({
   name: 'wish',
   initialState,
-  reducers: {},
+  reducers: {
+    setWishItem: (state, action: PayloadAction<Item | null>) => {
+      state.currentWishItem = action.payload;
+    },
+  },
   extraReducers: builder =>
     builder
       .addCase(fetchWishList.pending, state => {
@@ -24,3 +30,5 @@ export const wishSlice = createSlice({
         state.isLoading = false;
       }),
 });
+
+export const { reducer: wishReducer, actions: wishActions } = wishSlice;
